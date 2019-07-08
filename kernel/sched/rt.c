@@ -1542,6 +1542,18 @@ select_task_rq_rt(struct task_struct *p, int cpu, int sd_flag, int flags,
 	      curr->prio <= p->prio))) {
 		int target = find_lowest_rq(p);
 
+
+		/*
+		 * Check once for losing a race with the other core's irq
+		 * handler. This does not happen frequently, but it can avoid
+		 * delaying the execution of the RT task in those cases.
+		 */
+		if (target != -1) {
+			tgt_task = READ_ONCE(cpu_rq(target)->curr);
+			if (task_may_not_preempt(tgt_task, target))
+				target = find_lowest_rq(p);
+		}
+
 		/*
 		 * If cpu is non-preemptible, prefer remote cpu
 		 * even if it's running a higher-prio task.
