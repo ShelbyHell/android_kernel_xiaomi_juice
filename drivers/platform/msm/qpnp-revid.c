@@ -65,6 +65,7 @@ static const char *const pmic_names[] = {
 	[PMR735B_SUBTYPE] = "PMR735B",
 	[PM6125_SUBTYPE] = "PM6125",
 	[PM8008_SUBTYPE] = "PM8008",
+	[PM8010_SUBTYPE] = "PM8010",
 	[SMB1355_SUBTYPE] = "SMB1355",
 	[SMB1390_SUBTYPE] = "SMB1390",
 };
